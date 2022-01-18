@@ -199,13 +199,13 @@ function beginWatch(gmail){
       userId: "me",
       requestBody : {
         labelIds: ['UNREAD'],
-        topicName: 'projects/gmail-responder-338602/topics/responder-pubsub'
+        topicName: UserConfig.topic_name
       }
     }, function (err, res){
       handleAsyncGmail( gmail,
         err, function(err){},
         res , function (res){
-          const subscriptionName = 'projects/gmail-responder-338602/subscriptions/responder-pubsub-sub';
+          const subscriptionName = UserConfig.subscription_name;
           const timeout = 120;
           // Creates a client; cache this for further use
           const pubSubClient = new PubSub();

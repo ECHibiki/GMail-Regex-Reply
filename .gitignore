@@ -3,3 +3,4 @@ user-config.js
 client_secret.json
 gmail-responder-credentials.json
 gmail-nodejs-quickstart.json
+response-history.json
