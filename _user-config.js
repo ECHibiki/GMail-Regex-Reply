@@ -4,7 +4,7 @@ module.exports.email = "@gmail.com";
 module.exports.topic_name = 'projects/';
 module.exports.subscription_name = 'projects/';
 
-module.exports.valid_senders = [];
+module.exports.trusted_senders = []; // Do not include unsigned/invalid certificate senders
 module.exports.body_regex = /mailto:(?:(?:[^<>()[\]\\.,;:\s@"]+(?:\.[^<>()[\]\\.,;:\s@"]+)*)|(?:".+"))@(?:(?:\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(?:(?:[a-z\-0-9]+\.)+[a-z]{2,}))/i;
 module.exports.subject_regex = /[a-z]/;
 

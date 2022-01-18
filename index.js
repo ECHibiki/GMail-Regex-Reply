@@ -161,7 +161,7 @@ function sendFailMessage(gmail , err){
     {name: UserConfig.name  , addr: UserConfig.email} ,
     UserConfig.email ,
     UserConfig.fail_subject,
-    JSON.stringify(err, Object.getOwnPropertyNames(err)) ,
+    JSON.stringify(err) ,
   );
   sendMessage(gmail , msg_obj)
 }
@@ -231,8 +231,8 @@ function listenForMessages(gmail , pubSubClient , subscriptionName , history_id 
       history_id = sender_data.historyId;
       email_addr = sender_data.emailAddress;
       if(email_addr.toUpperCase() != UserConfig.email.toUpperCase()
-        && UserConfig.valid_senders.length
-        && UserConfig.valid_senders.indexOf(email_addr.toUpperCase()) == -1){
+        && UserConfig.trusted_senders.length
+        && UserConfig.trusted_senders.indexOf(email_addr.toUpperCase()) == -1){
         return;
       }
       gmail.users.history.list({
@@ -262,13 +262,17 @@ function listenForMessages(gmail , pubSubClient , subscriptionName , history_id 
                         'base64'
                       );
                       let subj = "";
+                      let addressed_to = "";
                       res.data.payload.headers.forEach((header, i) => {
                         if(header.name == 'Subject'){
                           subj = header.value;
                         }
+                        if(header.name == 'To'){
+                          addressed_to = header.value.replace(">" , "").replace("<" , "");
+                        }
                       });
                       let text = buff.toString('utf8');
-                      let response = testIfRegexMatch(text , subj , email_addr);
+                      let response = testIfRegexMatch(text , subj , addressed_to);
                       switch (response) {
                         case -1:
                           console.log("GMAIL REGEX REPLY INITIALIZED");
